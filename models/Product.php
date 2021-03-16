@@ -5,7 +5,7 @@ class Product
     private $conn;
     private $table = 'products'; // Används i SQL query längre ner
 
-    // Post värden
+    // Produkt värden
     public $id;
     public $category_id;
     public $category_name;
