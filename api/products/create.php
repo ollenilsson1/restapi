@@ -7,31 +7,32 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 include_once '../../config/Database.php';
-include_once '../../models/Post.php';
+include_once '../../models/Product.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
 //Förbered hämtning av post
-$post = new Post($db);
+$product = new Product($db);
 
-// Get raw posted data
+// Get raw producted data
 
 $data = json_decode(file_get_contents("php://input"));
 
-$post->title = $data->title;
-$post->body = $data->body;
-$post->author = $data->author;
-$post->category_id = $data->category_id;
+$product->title = $data->title;
+$product->description = $data->description;
+$product->imgUrl = $data->imgUrl;
+$product->price = $data->price;
+$product->category_id = $data->category_id;
 
-//Skapa post
-if($post->create()){
+//Skapa product
+if($product->create()){
     echo json_encode(
-        array('message' => 'Post Created')
+        array('message' => 'product Created')
     );
 } else {
     echo json_encode(
-        array('message' => 'Post not created')
+        array('message' => 'product not created')
     );
 }
 

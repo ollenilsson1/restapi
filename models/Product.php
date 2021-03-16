@@ -1,17 +1,18 @@
 <?php
-class Post
+class Product
 {
     //För databas
     private $conn;
-    private $table = 'posts'; // Används i SQL query längre ner
+    private $table = 'products'; // Används i SQL query längre ner
 
     // Post värden
     public $id;
     public $category_id;
     public $category_name;
     public $title;
-    public $body;
-    public $author;
+    public $description;
+    public $imgUrl;
+    public $price;
     public $created_at;
 
     // constructor för databasen, körs när classen körs och sätter databasen.
@@ -21,7 +22,7 @@ class Post
 
     }
 
-    // Hämta posts
+    // Hämta products
     public function read()
     {
         //skapa query
@@ -30,8 +31,9 @@ class Post
                     p.id,
                     p.category_id,
                     p.title,
-                    p.body,
-                    p.author,
+                    p.description,
+                    p.imgUrl,
+                    p.price,
                     p.created_at
                   FROM
                   ' . $this->table . '  p
@@ -58,8 +60,9 @@ class Post
                     p.id,
                     p.category_id,
                     p.title,
-                    p.body,
-                    p.author,
+                    p.description,
+                    p.imgUrl,
+                    p.price,
                     p.created_at
                   FROM
                   ' . $this->table . '  p
@@ -82,8 +85,9 @@ class Post
 
         //Sätta värden
         $this->title = $row['title'];
-        $this->body = $row['body'];
-        $this->author = $row['author'];
+        $this->description = $row['description'];
+        $this->imgUrl = $row['imgUrl'];
+        $this->price = $row['price'];
         $this->category_id = $row['category_id'];
         $this->category_name = $row['category_name'];
 
@@ -94,8 +98,9 @@ class Post
         $query = 'INSERT INTO ' . $this->table . '
         SET
           title = :title,
-          body = :body,
-          author = :author,
+          description = :description,
+          imgUrl = :imgUrl,
+          price = :price,
           category_id = :category_id';
 
         //Prepare statement
@@ -103,14 +108,16 @@ class Post
 
         //Clean data
         $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->body = htmlspecialchars(strip_tags($this->body));
-        $this->author = htmlspecialchars(strip_tags($this->author));
+        $this->description = htmlspecialchars(strip_tags($this->description));
+        $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
+        $this->price = htmlspecialchars(strip_tags($this->price));
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
         //BindParam
         $stmt->bindParam(':title', $this->title);
-        $stmt->bindParam(':body', $this->body);
-        $stmt->bindParam(':author', $this->author);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':imgUrl', $this->imgUrl);
+        $stmt->bindParam(':price', $this->price);
         $stmt->bindParam(':category_id', $this->category_id);
 
         //execute
@@ -125,14 +132,15 @@ class Post
 
     }
 
-    // Updatera post
+    // Uppdatera produkt
     public function update()
     {
         $query = 'UPDATE ' . $this->table . '
         SET
           title = :title,
-          body = :body,
-          author = :author,
+          description = :description,
+          imgUrl = :imgUrl,
+          price = :price,
           category_id = :category_id
         WHERE
           id = :id';
@@ -142,15 +150,17 @@ class Post
 
         //Clean data
         $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->body = htmlspecialchars(strip_tags($this->body));
-        $this->author = htmlspecialchars(strip_tags($this->author));
+        $this->description = htmlspecialchars(strip_tags($this->description));
+        $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
+        $this->price = htmlspecialchars(strip_tags($this->price));
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
         $this->id = htmlspecialchars(strip_tags($this->id));
 
         //BindParam
         $stmt->bindParam(':title', $this->title);
-        $stmt->bindParam(':body', $this->body);
-        $stmt->bindParam(':author', $this->author);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':imgUrl', $this->imgUrl);
+        $stmt->bindParam(':price', $this->price);
         $stmt->bindParam(':category_id', $this->category_id);
         $stmt->bindParam(':id', $this->id);
 

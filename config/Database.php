@@ -2,7 +2,7 @@
 class Database {
     //Private för att bara kunna användas inom klassen
     private $host = 'localhost';
-    private $db_name = 'myblog';
+    private $db_name = 'onlinestore';
     private $username = 'root';
     private $password = '';
     private $conn;
