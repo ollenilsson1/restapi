@@ -14,11 +14,57 @@ class User
     public $email;
     public $role;
     public $created_at;
+    
 
     //Constructor
     public function __construct($db)
     {
         $this->conn = $db;
+    }
+
+    //Skapa user
+    public function create_user()
+    {
+        $query = 'INSERT INTO ' . $this->table . '
+            SET
+              fname = :fname,
+              lname = :lname,
+              username = :username,
+              password = :password,
+              email = :email';
+
+        //Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        //Clean data
+        $this->fname = htmlspecialchars(strip_tags($this->fname));
+        $this->lname = htmlspecialchars(strip_tags($this->lname));
+        $this->username = htmlspecialchars(strip_tags($this->username));
+        $this->password = htmlspecialchars(strip_tags($this->password));
+        $this->email = htmlspecialchars(strip_tags($this->email));
+       
+        //Kryptera lösenord
+        $salt = "siahbndjiasnidja12893183s9300";
+        $this->password = md5($this->password.$salt);
+
+
+        //BindParam
+        $stmt->bindParam(':fname', $this->fname);
+        $stmt->bindParam(':lname', $this->lname);
+        $stmt->bindParam(':username', $this->username);
+        $stmt->bindParam(':password', $this->password);
+        $stmt->bindParam(':email', $this->email);
+
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+
+        return false;
+
     }
 
     // Hämta alla users
@@ -88,6 +134,29 @@ class User
         $this->created_at = $row['created_at'];
         $this->role = $row['role'];
 
+    }
+
+    //Delete post
+    public function delete_user()
+    {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE userID = :userID';
+        //Prepare statement
+        $stmt = $this->conn->prepare($query);
+        //Clean
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //Bind
+        $stmt->bindParam(':userID', $this->userID);
+        /* $stmt->bindParam(1, $this->id); */
+
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+
+        return false;
     }
 
 }

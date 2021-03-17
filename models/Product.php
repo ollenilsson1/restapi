@@ -92,7 +92,7 @@ class Product
         $this->category_name = $row['category_name'];
 
     }
-    //Skapa post
+    //Skapa Produkt
     public function create()
     {
         $query = 'INSERT INTO ' . $this->table . '

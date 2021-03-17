@@ -20,12 +20,12 @@ $num = $result->rowCount();
 
 //Kolla om det finns users
 if ($num > 0) {
-    //user array
+    //users array
     $users_arr = array();
-    $users_arr['data'] = array();
+    $users_arr['data'] = array();        //Gör en array i users_arr som heter data
 
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        //Extract gör så att man kan skriva $title direkt istället för $row['title']
+        //Extract gör så att man kan skriva $userID direkt istället för $row['userID']
         extract($row);
 
         $user_item = array(
