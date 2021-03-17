@@ -14,7 +14,6 @@ class User
     public $email;
     public $role;
     public $created_at;
-    
 
     //Constructor
     public function __construct($db)
@@ -25,7 +24,25 @@ class User
     //Skapa user
     public function create_user()
     {
-        $query = 'INSERT INTO ' . $this->table . '
+        if (!empty($this->fname) && !empty($this->lname) && !empty($this->username) && !empty($this->password) && !empty($this->email)) {
+
+            $query1 = "SELECT userID FROM users WHERE username=:username OR email=:email";
+            $stmt1 = $this->conn->prepare($query1);
+            $stmt1->bindParam(':username', $this->username);
+            $stmt1->bindParam(':email', $this->email);
+
+            if (!$stmt1->execute()) {
+                echo "Something went wrong";
+                die();
+            }
+
+            $num_rows = $stmt1->rowCount();
+            if ($num_rows > 0) {
+                echo "User is already registered";
+                die();
+            }
+
+            $query = 'INSERT INTO ' . $this->table . '
             SET
               fname = :fname,
               lname = :lname,
@@ -33,38 +50,40 @@ class User
               password = :password,
               email = :email';
 
-        //Prepare statement
-        $stmt = $this->conn->prepare($query);
+            //Prepare statement
+            $stmt = $this->conn->prepare($query);
 
-        //Clean data
-        $this->fname = htmlspecialchars(strip_tags($this->fname));
-        $this->lname = htmlspecialchars(strip_tags($this->lname));
-        $this->username = htmlspecialchars(strip_tags($this->username));
-        $this->password = htmlspecialchars(strip_tags($this->password));
-        $this->email = htmlspecialchars(strip_tags($this->email));
-       
-        //Kryptera lösenord
-        $salt = "siahbndjiasnidja12893183s9300";
-        $this->password = md5($this->password.$salt);
+            //Clean data
+            $this->fname = htmlspecialchars(strip_tags($this->fname));
+            $this->lname = htmlspecialchars(strip_tags($this->lname));
+            $this->username = htmlspecialchars(strip_tags($this->username));
+            $this->password = htmlspecialchars(strip_tags($this->password));
+            $this->email = htmlspecialchars(strip_tags($this->email));
 
+            //Kryptera lösenord
+            $salt = "siahbndjiasnidja12893183s9300";
+            $this->password = md5($this->password . $salt);
 
-        //BindParam
-        $stmt->bindParam(':fname', $this->fname);
-        $stmt->bindParam(':lname', $this->lname);
-        $stmt->bindParam(':username', $this->username);
-        $stmt->bindParam(':password', $this->password);
-        $stmt->bindParam(':email', $this->email);
+            //BindParam
+            $stmt->bindParam(':fname', $this->fname);
+            $stmt->bindParam(':lname', $this->lname);
+            $stmt->bindParam(':username', $this->username);
+            $stmt->bindParam(':password', $this->password);
+            $stmt->bindParam(':email', $this->email);
 
-        //execute
-        if ($stmt->execute()) {
-            return true;
+            //execute
+            if ($stmt->execute()) {
+                return true;
+            }
+
+            //error om den inte körs
+            printf("ERROR: %s.\n", $stmt->error);
+
+            return false;
+        } else {
+            echo "Fill in all the fields!";
+            die();
         }
-
-        //error om den inte körs
-        printf("ERROR: %s.\n", $stmt->error);
-
-        return false;
-
     }
 
     // Hämta alla users
