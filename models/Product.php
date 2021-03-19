@@ -176,6 +176,8 @@ class Product
 
     }
 
+    
+
     //Delete post
     public function delete()
     {

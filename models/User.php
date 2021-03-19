@@ -136,7 +136,7 @@ class User
         $stmt = $this->conn->prepare($query);
 
         //Binda id till ? i SQL
-        $stmt->bindParam(1, $this->id); // Eftersom det bara finns en parameter '?' i SQL frågan 1, this ID
+        $stmt->bindParam(1, $this->userID); // Eftersom det bara finns en parameter '?' i SQL frågan 1, this ID
 
         //execute
         $stmt->execute();
@@ -221,6 +221,11 @@ class User
         //Clean data
         $this->password = htmlspecialchars(strip_tags($this->password));
         $this->userID = htmlspecialchars(strip_tags($this->userID));
+
+        //Kryptera lösenord
+        $salt = "siahbndjiasnidja12893183s9300";
+        $this->password = md5($this->password . $salt);
+        
         //BindParam
         $stmt->bindParam(':password_IN', $this->password);
         $stmt->bindParam(':userID_IN', $this->userID);

@@ -14,7 +14,7 @@ $user = new User($db);
 
 //Hämta id från url
 
-$user->id = isset($_GET['id']) ? $_GET['id'] : die();
+$user->userID = isset($_GET['userID']) ? $_GET['userID'] : die();
 
 //Hämta user
 $user->read_single();
