@@ -155,7 +155,123 @@ class User
 
     }
 
-    //Delete post
+
+    public function updateFname()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET fname = :fname_IN WHERE userID = :userID_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->fname = htmlspecialchars(strip_tags($this->fname));
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //BindParam
+        $stmt->bindParam(':fname_IN', $this->fname);
+        $stmt->bindParam(':userID_IN', $this->userID);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updateLname()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET lname = :lname_IN WHERE userID = :userID_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->lname = htmlspecialchars(strip_tags($this->lname));
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //BindParam
+        $stmt->bindParam(':lname_IN', $this->lname);
+        $stmt->bindParam(':userID_IN', $this->userID);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+
+    public function updateUsername()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET username = :username_IN WHERE userID = :userID_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->username = htmlspecialchars(strip_tags($this->username));
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //BindParam
+        $stmt->bindParam(':username_IN', $this->username);
+        $stmt->bindParam(':userID_IN', $this->userID);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updatePassword()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET password = :password_IN WHERE userID = :userID_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->password = htmlspecialchars(strip_tags($this->password));
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //BindParam
+        $stmt->bindParam(':password_IN', $this->password);
+        $stmt->bindParam(':userID_IN', $this->userID);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updateEmail()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET email = :email_IN WHERE userID = :userID_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->email = htmlspecialchars(strip_tags($this->email));
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //BindParam
+        $stmt->bindParam(':email_IN', $this->email);
+        $stmt->bindParam(':userID_IN', $this->userID);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updateRole()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET role = :role_IN WHERE userID = :userID_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->role = htmlspecialchars(strip_tags($this->role));
+        $this->userID = htmlspecialchars(strip_tags($this->userID));
+        //BindParam
+        $stmt->bindParam(':role_IN', $this->role);
+        $stmt->bindParam(':userID_IN', $this->userID);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    //Delete user
     public function delete()
     {
         $query = 'DELETE FROM ' . $this->table . ' WHERE userID = :userID';
