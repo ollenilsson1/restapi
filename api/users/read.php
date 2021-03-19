@@ -13,7 +13,7 @@ $db = $database->connect(); // connect funktionen kommer från Database.php
 $user = new User($db);
 
 //Kör query funktionen från user.php
-$result = $user->read_users();
+$result = $user->read();
 
 //rowcount
 $num = $result->rowCount();

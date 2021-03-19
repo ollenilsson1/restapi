@@ -17,7 +17,7 @@ $user = new User($db);
 $user->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 //Hämta user
-$user->read_single_user();
+$user->read_single();
 
 //Skapa array med all data
 $user_arr = array(

@@ -22,7 +22,7 @@ class User
     }
 
     //Skapa user
-    public function create_user()
+    public function create()
     {
         if (!empty($this->fname) && !empty($this->lname) && !empty($this->username) && !empty($this->password) && !empty($this->email)) {
 
@@ -87,7 +87,7 @@ class User
     }
 
     // Hämta alla users
-    public function read_users()
+    public function read()
     {
         //skapa query
         $query = 'SELECT
@@ -114,7 +114,7 @@ class User
 
     }
 
-    public function read_single_user()
+    public function read_single()
     {
         //skapa query
         $query = 'SELECT
@@ -156,7 +156,7 @@ class User
     }
 
     //Delete post
-    public function delete_user()
+    public function delete()
     {
         $query = 'DELETE FROM ' . $this->table . ' WHERE userID = :userID';
         //Prepare statement
@@ -165,7 +165,6 @@ class User
         $this->userID = htmlspecialchars(strip_tags($this->userID));
         //Bind
         $stmt->bindParam(':userID', $this->userID);
-        /* $stmt->bindParam(1, $this->id); */
 
         //execute
         if ($stmt->execute()) {

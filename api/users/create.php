@@ -26,7 +26,7 @@ $user->password = $data->password;
 $user->email = $data->email;
 
 //Skapa user
-if ($user->create_user()) {
+if ($user->create()) {
     echo json_encode(
         array('message' => 'User created!')
     );

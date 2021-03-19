@@ -22,7 +22,7 @@ $data = json_decode(file_get_contents("php://input"));
 $user->userID = $data->userID;
 
 //Delete user
-if ($user->delete_user()) {
+if ($user->delete()) {
     echo json_encode(
         array('message' => 'user deleted')
     );
