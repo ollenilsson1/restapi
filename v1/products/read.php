@@ -9,7 +9,6 @@ include_once '../../objects/Product.php';
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
-//Förbered hämtning av post
 $product = new Product($db);
 
 //Kör query funktionen från product.php
