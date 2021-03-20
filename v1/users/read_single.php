@@ -9,14 +9,12 @@ include_once '../../objects/User.php';
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
-//Förbered hämtning av product
 $user = new User($db);
 
 //Hämta id från url
-
 $user->userID = isset($_GET['userID']) ? $_GET['userID'] : die();
 
-//Hämta user
+//Hämta user med rätt id
 $user->read_single();
 
 //Skapa array med all data

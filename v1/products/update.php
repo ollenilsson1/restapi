@@ -14,7 +14,7 @@ $db = $database->connect(); // connect funktionen kommer från Database.php
 //Förbered hämtning av post
 $product = new Product($db);
 
-// Get raw producted data
+//Hämtar input
 
 $data = json_decode(file_get_contents("php://input"));
 

@@ -9,7 +9,6 @@ include_once '../../objects/Product.php';
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
-//Förbered hämtning av product
 $product = new Product($db);
 
 if (isset($_GET['keyword'])) {
@@ -20,7 +19,7 @@ if (isset($_GET['keyword'])) {
     );
     die();
 }
-//Sök efter produkt
+//Kör funktion
 $result = $product->search();
 
 //rowcount

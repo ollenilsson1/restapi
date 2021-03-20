@@ -15,7 +15,7 @@ $db = $database->connect(); // connect funktionen kommer från Database.php
 //Förbered hämtning av product
 $user = new User($db);
 
-// Get raw user data
+//Hämtar input
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -25,7 +25,7 @@ $user->username = $data->username;
 $user->password = $data->password; 
 $user->email = $data->email;
 
-//Skapa user
+//Kör funktion med all data
 if ($user->create()) {
     echo json_encode(
         array('message' => 'User created!')

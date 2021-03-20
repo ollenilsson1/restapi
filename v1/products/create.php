@@ -32,7 +32,7 @@ if($product->create()){
     );
 } else {
     echo json_encode(
-        array('message' => 'Could not create oroduct')
+        array('message' => 'Could not create product')
     );
 }
 

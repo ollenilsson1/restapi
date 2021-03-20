@@ -2,32 +2,31 @@
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');   // METHOD DELETE
+header('Access-Control-Allow-Methods: POST'); // POST METHOD
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+
 include_once '../../config/Database.php';
-include_once '../../objects/Product.php';
+include_once '../../objects/Category.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
-//Förbered hämtning av product
-$product = new Product($db);
+$category = new Category($db);
 
-//Hämtar input
+// Hämtar input
 
 $data = json_decode(file_get_contents("php://input"));
 
-// Sätt rätt ID till product som ska deletas
-$product->id = $data->id;
+$category->name = $data->name;
 
-//Delete product
-if ($product->delete()) {
+//Skapa category
+if($category->create()){
     echo json_encode(
-        array('message' => 'product deleted')
+        array('message' => 'category created!')
     );
 } else {
     echo json_encode(
-        array('message' => 'product not deleted')
+        array('message' => 'Could not create category')
     );
 }

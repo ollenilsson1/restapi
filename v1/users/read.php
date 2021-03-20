@@ -9,10 +9,8 @@ include_once '../../objects/User.php';
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
-//Förbered hämtning av post
 $user = new User($db);
 
-//Kör query funktionen från user.php
 $result = $user->read();
 
 //rowcount

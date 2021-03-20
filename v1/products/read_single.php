@@ -13,10 +13,9 @@ $db = $database->connect(); // connect funktionen kommer från Database.php
 $product = new Product($db);
 
 //Hämta id från url
-
 $product->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-//Hämta product
+//Kör funktion med rätt id
 $product->read_single();
 
 //Skapa array med all data

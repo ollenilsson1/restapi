@@ -14,11 +14,10 @@ $db = $database->connect(); // connect funktionen kommer från Database.php
 //Förbered hämtning av product
 $user = new User($db);
 
-// Get raw user data
-
+//Hämtar input
 $data = json_decode(file_get_contents("php://input"));
 
-// Sätt det data till user som ska deletas
+// Sätt rätt ID till user som ska deletas
 $user->userID = $data->userID;
 
 //Delete user
