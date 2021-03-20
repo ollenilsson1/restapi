@@ -2,36 +2,32 @@
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST'); // POST METHOD
+header('Access-Control-Allow-Methods: DELETE');   // METHOD DELETE
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
-error_reporting(E_ALL ^ E_WARNING); // Visar en varning om man inte fyllt i alla fält i create_user
+include_once '../../objects/Product.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
 //Förbered hämtning av product
-$user = new User($db);
+$product = new Product($db);
 
-// Get raw user data
+// Get raw product data
 
 $data = json_decode(file_get_contents("php://input"));
 
-$user->fname = $data->fname;
-$user->lname = $data->lname;
-$user->username = $data->username;
-$user->password = $data->password; 
-$user->email = $data->email;
+// Sätt det data till product som ska deletas
+$product->id = $data->id;
 
-//Skapa user
-if ($user->create()) {
+//Delete product
+if ($product->delete()) {
     echo json_encode(
-        array('message' => 'User created!')
+        array('message' => 'product deleted')
     );
 } else {
     echo json_encode(
-        array('message' => 'Could not create user')
+        array('message' => 'product not deleted')
     );
 }

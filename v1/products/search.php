@@ -4,16 +4,24 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config/Database.php';
-include_once '../../models/Product.php';
+include_once '../../objects/Product.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
 
-//Förbered hämtning av post
+//Förbered hämtning av product
 $product = new Product($db);
 
-//Kör query funktionen från product.php
-$result = $product->read();
+if (isset($_GET['keyword'])) {
+    $product->keyword = $_GET['keyword'];
+} else {
+    echo json_encode(
+        array('message' => 'No values to search for..')
+    );
+    die();
+}
+//Sök efter produkt
+$result = $product->search();
 
 //rowcount
 $num = $result->rowCount();

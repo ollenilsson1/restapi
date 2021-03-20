@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 
 include_once '../../config/Database.php';
-include_once '../../models/Product.php';
+include_once '../../objects/Product.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php

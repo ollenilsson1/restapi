@@ -6,7 +6,7 @@ header('Access-Control-Allow-Methods: PUT'); // METHOD PUT
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
 include_once '../../config/Database.php';
-include_once '../../models/User.php';
+include_once '../../objects/User.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php

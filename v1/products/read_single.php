@@ -4,7 +4,7 @@ header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
 include_once '../../config/Database.php';
-include_once '../../models/Product.php';
+include_once '../../objects/Product.php';
 
 $database = new Database();
 $db = $database->connect(); // connect funktionen kommer från Database.php
