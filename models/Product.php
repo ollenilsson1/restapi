@@ -14,6 +14,7 @@ class Product
     public $imgUrl;
     public $price;
     public $created_at;
+    public $keyword;
 
     // constructor för databasen, körs när classen körs och sätter databasen.
     public function __construct($db)
@@ -22,7 +23,47 @@ class Product
 
     }
 
-    // Hämta products
+    //Skapa Produkt
+    public function create()
+    {
+        $query = 'INSERT INTO ' . $this->table . '
+            SET
+              title = :title,
+              description = :description,
+              imgUrl = :imgUrl,
+              price = :price,
+              category_id = :category_id';
+
+        //Prepare statement
+        $stmt = $this->conn->prepare($query);
+
+        //Clean data
+        $this->title = htmlspecialchars(strip_tags($this->title));
+        $this->description = htmlspecialchars(strip_tags($this->description));
+        $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
+        $this->price = htmlspecialchars(strip_tags($this->price));
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+
+        //BindParam
+        $stmt->bindParam(':title', $this->title);
+        $stmt->bindParam(':description', $this->description);
+        $stmt->bindParam(':imgUrl', $this->imgUrl);
+        $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':category_id', $this->category_id);
+
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+
+        return false;
+
+    }
+
+    // Hämta alla products
     public function read()
     {
         //skapa query
@@ -49,7 +90,6 @@ class Product
         $stmt->execute();
 
         return $stmt;
-
     }
 
     public function read_single()
@@ -92,90 +132,6 @@ class Product
         $this->category_name = $row['category_name'];
 
     }
-    //Skapa Produkt
-    public function create()
-    {
-        $query = 'INSERT INTO ' . $this->table . '
-        SET
-          title = :title,
-          description = :description,
-          imgUrl = :imgUrl,
-          price = :price,
-          category_id = :category_id';
-
-        //Prepare statement
-        $stmt = $this->conn->prepare($query);
-
-        //Clean data
-        $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->description = htmlspecialchars(strip_tags($this->description));
-        $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
-        $this->price = htmlspecialchars(strip_tags($this->price));
-        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
-
-        //BindParam
-        $stmt->bindParam(':title', $this->title);
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':imgUrl', $this->imgUrl);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':category_id', $this->category_id);
-
-        //execute
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        //error om den inte körs
-        printf("ERROR: %s.\n", $stmt->error);
-
-        return false;
-
-    }
-
-/*     
-
-public function update()
-{
-$query = 'UPDATE ' . $this->table . '
-SET
-title = :title,
-description = :description,
-imgUrl = :imgUrl,
-price = :price,
-category_id = :category_id
-WHERE
-id = :id';
-
-//Prepare statement
-$stmt = $this->conn->prepare($query);
-
-//Clean data
-$this->title = htmlspecialchars(strip_tags($this->title));
-$this->description = htmlspecialchars(strip_tags($this->description));
-$this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
-$this->price = htmlspecialchars(strip_tags($this->price));
-$this->category_id = htmlspecialchars(strip_tags($this->category_id));
-$this->id = htmlspecialchars(strip_tags($this->id));
-
-//BindParam
-$stmt->bindParam(':title', $this->title);
-$stmt->bindParam(':description', $this->description);
-$stmt->bindParam(':imgUrl', $this->imgUrl);
-$stmt->bindParam(':price', $this->price);
-$stmt->bindParam(':category_id', $this->category_id);
-$stmt->bindParam(':id', $this->id);
-
-//execute
-if ($stmt->execute()) {
-return true;
-}
-
-//error om den inte körs
-printf("ERROR: %s.\n", $stmt->error);
-
-return false;
-
-} */
 
     public function updateTitle()
     {
@@ -271,6 +227,41 @@ return false;
         printf("ERROR: %s.\n", $stmt->error);
         return false;
     }
+
+    function search(){
+    $query = 'SELECT
+                    c.name as category_name,
+                    p.id,
+                    p.category_id,
+                    p.title,
+                    p.description,
+                    p.imgUrl,
+                    p.price,
+                    p.created_at
+                  FROM
+                  ' . $this->table . '  p
+                  LEFT JOIN
+                    categories c ON p.category_id = c.id
+                  WHERE
+                    p.title LIKE :keyword_IN
+                  OR
+                    p.description LIKE :keyword_IN';
+
+        //Prepare
+        $stmt = $this->conn->prepare($query);
+        //keyword
+        $keyword = '%'. $this->keyword .'%';
+        //Bind
+        $stmt->bindParam(':keyword_IN', $keyword);
+        //execute
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
 
     //Delete post
     public function delete()
