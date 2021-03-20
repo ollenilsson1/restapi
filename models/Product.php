@@ -132,51 +132,145 @@ class Product
 
     }
 
-    // Uppdatera produkt
-    public function update()
+/*     
+
+public function update()
+{
+$query = 'UPDATE ' . $this->table . '
+SET
+title = :title,
+description = :description,
+imgUrl = :imgUrl,
+price = :price,
+category_id = :category_id
+WHERE
+id = :id';
+
+//Prepare statement
+$stmt = $this->conn->prepare($query);
+
+//Clean data
+$this->title = htmlspecialchars(strip_tags($this->title));
+$this->description = htmlspecialchars(strip_tags($this->description));
+$this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
+$this->price = htmlspecialchars(strip_tags($this->price));
+$this->category_id = htmlspecialchars(strip_tags($this->category_id));
+$this->id = htmlspecialchars(strip_tags($this->id));
+
+//BindParam
+$stmt->bindParam(':title', $this->title);
+$stmt->bindParam(':description', $this->description);
+$stmt->bindParam(':imgUrl', $this->imgUrl);
+$stmt->bindParam(':price', $this->price);
+$stmt->bindParam(':category_id', $this->category_id);
+$stmt->bindParam(':id', $this->id);
+
+//execute
+if ($stmt->execute()) {
+return true;
+}
+
+//error om den inte körs
+printf("ERROR: %s.\n", $stmt->error);
+
+return false;
+
+} */
+
+    public function updateTitle()
     {
-        $query = 'UPDATE ' . $this->table . '
-        SET
-          title = :title,
-          description = :description,
-          imgUrl = :imgUrl,
-          price = :price,
-          category_id = :category_id
-        WHERE
-          id = :id';
-
-        //Prepare statement
+        $query = 'UPDATE ' . $this->table . ' SET title = :title_IN WHERE id = :id_IN';
         $stmt = $this->conn->prepare($query);
-
         //Clean data
         $this->title = htmlspecialchars(strip_tags($this->title));
-        $this->description = htmlspecialchars(strip_tags($this->description));
-        $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
-        $this->price = htmlspecialchars(strip_tags($this->price));
-        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
         $this->id = htmlspecialchars(strip_tags($this->id));
-
         //BindParam
-        $stmt->bindParam(':title', $this->title);
-        $stmt->bindParam(':description', $this->description);
-        $stmt->bindParam(':imgUrl', $this->imgUrl);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':category_id', $this->category_id);
-        $stmt->bindParam(':id', $this->id);
-
+        $stmt->bindParam(':title_IN', $this->title);
+        $stmt->bindParam(':id_IN', $this->id);
         //execute
         if ($stmt->execute()) {
             return true;
         }
-
         //error om den inte körs
         printf("ERROR: %s.\n", $stmt->error);
-
         return false;
-
     }
 
-    
+    public function updateDescription()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET description = :description_IN WHERE id = :id_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->description = htmlspecialchars(strip_tags($this->description));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        //BindParam
+        $stmt->bindParam(':description_IN', $this->description);
+        $stmt->bindParam(':id_IN', $this->id);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updateImgUrl()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET imgUrl = :imgUrl_IN WHERE id = :id_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        //BindParam
+        $stmt->bindParam(':imgUrl_IN', $this->imgUrl);
+        $stmt->bindParam(':id_IN', $this->id);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updatePrice()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET price = :price_IN WHERE id = :id_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->price = htmlspecialchars(strip_tags($this->price));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        //BindParam
+        $stmt->bindParam(':price_IN', $this->price);
+        $stmt->bindParam(':id_IN', $this->id);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
+    public function updateCategory()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET category_id = :category_id_IN WHERE id = :id_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->category_id = htmlspecialchars(strip_tags($this->category_id));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        //BindParam
+        $stmt->bindParam(':category_id_IN', $this->category_id);
+        $stmt->bindParam(':id_IN', $this->id);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
 
     //Delete post
     public function delete()

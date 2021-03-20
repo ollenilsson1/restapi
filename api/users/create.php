@@ -22,7 +22,7 @@ $data = json_decode(file_get_contents("php://input"));
 $user->fname = $data->fname;
 $user->lname = $data->lname;
 $user->username = $data->username;
-$user->password = $data->password;
+$user->password = $data->password; 
 $user->email = $data->email;
 
 //Skapa user

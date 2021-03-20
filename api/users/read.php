@@ -22,7 +22,7 @@ $num = $result->rowCount();
 if ($num > 0) {
     //users array
     $users_arr = array();
-    $users_arr['data'] = array();        //Gör en array i users_arr som heter data
+    $users_arr['data'] = array(); //Gör en array i users_arr som heter data
 
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         //Extract gör så att man kan skriva $userID direkt istället för $row['userID']
@@ -31,7 +31,7 @@ if ($num > 0) {
         $user_item = array(
             'userID' => $userID,
             'fname' => $fname,
-            'lname' => $lname, 
+            'lname' => $lname,
             'username' => $username,
             'password' => $password,
             'email' => $email,

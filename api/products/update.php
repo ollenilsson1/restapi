@@ -18,6 +18,59 @@ $product = new Product($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
+//Kolla om id finns annars error, die.
+if (isset($data->id)) {
+    $product->id = $data->id;
+} else {
+    echo json_encode(
+        array('message' => 'ID not specified')
+    );
+    die();
+}
+
+// Om värdet är satt, kör funktionen.
+if (isset($data->title)) {
+    $product->title = $data->title;
+    $product->updateTitle();
+    echo json_encode(
+        array('message' => 'Title updated!')
+    );
+}
+
+if (isset($data->description)) {
+    $product->description = $data->description;
+    $product->updateDescription();
+    echo json_encode(
+        array('message' => 'Description updated!')
+    );
+}
+
+if (isset($data->imgUrl)) {
+    $product->imgUrl = $data->imgUrl;
+    $product->updateImgUrl();
+    echo json_encode(
+        array('message' => 'Image-Url updated!')
+    );
+}
+
+if (isset($data->price)) {
+    $product->price = $data->price;
+    $product->updatePrice();
+    echo json_encode(
+        array('message' => 'Price updated!')
+    );
+}
+
+if (isset($data->category_id)) {
+    $product->category_id = $data->category_id;
+    $product->updateCategory();
+    echo json_encode(
+        array('message' => 'Category ID updated!')
+    );
+}
+
+/* 
+
 // Sätt det data till product som ska uppdateras
 $product->id = $data->id;
 
@@ -27,7 +80,8 @@ $product->imgUrl = $data->imgUrl;
 $product->price = $data->price;
 $product->category_id = $data->category_id;
 
-//Uppdatera product
+
+Uppdatera product
 if ($product->update()) {
     echo json_encode(
         array('message' => 'product Updated')
@@ -36,4 +90,4 @@ if ($product->update()) {
     echo json_encode(
         array('message' => 'product not updated')
     );
-}
+} */
