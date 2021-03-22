@@ -61,6 +61,14 @@ if (isset($data->price)) {
     );
 }
 
+if (isset($data->quantity)) {
+    $product->quantity = $data->quantity;
+    $product->updateQuantity();
+    echo json_encode(
+        array('message' => 'Quantity updated!')
+    );
+}
+
 if (isset($data->category_id)) {
     $product->category_id = $data->category_id;
     $product->updateCategory();

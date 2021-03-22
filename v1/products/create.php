@@ -23,6 +23,7 @@ $product->title = $data->title;
 $product->description = $data->description;
 $product->imgUrl = $data->imgUrl;
 $product->price = $data->price;
+$product->quantity = $data->quantity;
 $product->category_id = $data->category_id;
 
 //Skapa product

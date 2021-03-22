@@ -25,6 +25,7 @@ $product_arr = array(
     'description' => $product->description,
     'imgUrl' => $product->imgUrl,
     'price' => $product->price,
+    'quantity' => $product->quantity,
     'category_id' => $product->category_id,
     'category_name' => $product->category_name,
 );

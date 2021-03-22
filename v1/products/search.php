@@ -41,6 +41,7 @@ if ($num > 0) {
             'description' => html_entity_decode($description), // Inbyggd funktion som gör om html till text om det skulle finnas i body
             'imgUrl' => $imgUrl,
             'price' => $price,
+            'quantity' => $quantity,
             'category_id' => $category_id,
             'category_name' => $category_name,
         );

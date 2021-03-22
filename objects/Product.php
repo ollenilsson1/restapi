@@ -13,6 +13,7 @@ class Product
     public $description;
     public $imgUrl;
     public $price;
+    public $quantity;
     public $created_at;
     public $keyword;
 
@@ -32,6 +33,7 @@ class Product
               description = :description,
               imgUrl = :imgUrl,
               price = :price,
+              quantity = :quantity,
               category_id = :category_id';
 
         //Prepare statement
@@ -42,6 +44,7 @@ class Product
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->imgUrl = htmlspecialchars(strip_tags($this->imgUrl));
         $this->price = htmlspecialchars(strip_tags($this->price));
+        $this->quantity = htmlspecialchars(strip_tags($this->quantity));
         $this->category_id = htmlspecialchars(strip_tags($this->category_id));
 
         //BindParam
@@ -49,6 +52,7 @@ class Product
         $stmt->bindParam(':description', $this->description);
         $stmt->bindParam(':imgUrl', $this->imgUrl);
         $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':quantity', $this->quantity);
         $stmt->bindParam(':category_id', $this->category_id);
 
         //execute
@@ -75,6 +79,7 @@ class Product
                     p.description,
                     p.imgUrl,
                     p.price,
+                    p.quantity,
                     p.created_at
                   FROM
                   ' . $this->table . '  p
@@ -103,6 +108,7 @@ class Product
                     p.description,
                     p.imgUrl,
                     p.price,
+                    p.quantity,
                     p.created_at
                   FROM
                   ' . $this->table . '  p
@@ -128,6 +134,7 @@ class Product
         $this->description = $row['description'];
         $this->imgUrl = $row['imgUrl'];
         $this->price = $row['price'];
+        $this->quantity = $row['quantity'];
         $this->category_id = $row['category_id'];
         $this->category_name = $row['category_name'];
 
@@ -209,6 +216,25 @@ class Product
         return false;
     }
 
+    public function updateQuantity()
+    {
+        $query = 'UPDATE ' . $this->table . ' SET quantity = :quantity_IN WHERE id = :id_IN';
+        $stmt = $this->conn->prepare($query);
+        //Clean data
+        $this->quantity = htmlspecialchars(strip_tags($this->quantity));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        //BindParam
+        $stmt->bindParam(':quantity_IN', $this->quantity);
+        $stmt->bindParam(':id_IN', $this->id);
+        //execute
+        if ($stmt->execute()) {
+            return true;
+        }
+        //error om den inte körs
+        printf("ERROR: %s.\n", $stmt->error);
+        return false;
+    }
+
     public function updateCategory()
     {
         $query = 'UPDATE ' . $this->table . ' SET category_id = :category_id_IN WHERE id = :id_IN';
@@ -237,6 +263,7 @@ class Product
                     p.description,
                     p.imgUrl,
                     p.price,
+                    p.quantity,
                     p.created_at
                   FROM
                   ' . $this->table . '  p
